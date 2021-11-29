@@ -1,0 +1,14 @@
+{
+    "name": "mydear/cob-table-plugin",
+    "description": "dynamic table fidder",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hadi Arbabi",
+            "email": "h.arbabi@cobex.ir"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+   
+}
