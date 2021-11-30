@@ -65,11 +65,11 @@ function plugin_settings_page()
                 </tr>
                 <tr valign="top">
                     <th scope="row">Time Intervel</th>
-                    <td><input type="number" name="api_time_intervel" value="<?php echo esc_attr(get_option('api_time_intervel')); ?>" /></td>
+                    <td><input type="number" name="api_time_intervel" value="<?php echo esc_attr(get_option('api_time_intervel')); ?>" /><label for="api_time_intervel">   میلی ثانیه   </label></td>
                 </tr>
                 <tr valign="top">
                     <th scope="row">Classes</th>
-                    <td><input type="text" name="table_classes" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes">با فاصله از هم جدا کنید</label>
+                    <td><input type="text" name="table_classes" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes">    با فاصله از هم جدا کنید   </label>
                     </td>
                 </tr>
             </table>
@@ -80,7 +80,7 @@ function plugin_settings_page()
 //shortkey
 function tbare_wordpress_plugin_demo($atts)
 {
-    $Content =   "<div id='cob_table_plugin' ></div>";
+    $Content =   "<div id='cob_table_plugin' style='height: 660px' ></div>";
     return $Content;
 }
 add_shortcode('cob_table_shortcode', 'tbare_wordpress_plugin_demo');
