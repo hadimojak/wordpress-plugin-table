@@ -1,1 +1,0 @@
-<h1>cob table plugin</h1>
