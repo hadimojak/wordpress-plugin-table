@@ -25,20 +25,13 @@ function startInterval(seconds) {
         }
     }).then(data => {
         data.forEach(p => {
-            console.log(p);
             let firstRow = '';
+            let row = '';
             for (el in p) {
-
                 firstRow += `<th scope="col">${el}</th>`;
+                row += `<td >${p[el]}</td>`;
             }
             tableHead.innerHTML = firstRow;
-
-            const row = `
-            <th scope="row">${p.id}</th>
-            <td>${p.title}</td>
-            <td>${p.createdAt}</td>
-            <td>${p.updatedAt}</td>
-            `;
             tableBody.innerHTML += row;
         });
         tableLocation.insertAdjacentElement('afterbegin', table);
@@ -65,12 +58,13 @@ function startInterval(seconds) {
         }).then(data => {
             // console.log(data);
             data.forEach(p => {
-                const row = `
-                <th scope="row">${p.id}</th>
-                <td>${p.title}</td>
-                <td>${p.createdAt}</td>
-                <td>${p.updatedAt}</td>
-                `;
+                let firstRow = '';
+                let row = '';
+                for (el in p) {
+                    firstRow += `<th scope="col">${el}</th>`;
+                    row += `<td >${p[el]}</td>`;
+                }
+                tableHead.innerHTML = firstRow;
                 tableBody.innerHTML += row;
             });
             tableLocation.insertAdjacentElement('afterbegin', table);
