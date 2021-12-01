@@ -1,12 +1,41 @@
 <?php
 
 /**
+ * @package apiTablePlugin
+ */
+/*
  * Plugin Name: cob table plugin
- * Description: This is the very first plugin I ever created.
+ * Description: a usefull plugin for create and fill the table with api json data.
  * Version: 1.0
  * Author: hadia arbabi
+ * Author URI: https://www.linkedin.com/in/hadi-arbabi/
+ * License: MIT
+ */
+/*
+Copyright 2021 hadi arbabi
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the 
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
+ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  **/
 
+if (!defined('ABSPATH')) {
+    die;
+}
 
 //registering scripts
 add_action('init', 'register_scripts');
@@ -65,16 +94,16 @@ function plugin_settings_page()
                 </tr>
                 <tr valign="top">
                     <th scope="row">Time Intervel</th>
-                    <td><input type="number" name="api_time_intervel" value="<?php echo esc_attr(get_option('api_time_intervel')); ?>" /><label for="api_time_intervel">   میلی ثانیه   </label></td>
+                    <td><input type="number" name="api_time_intervel" value="<?php echo esc_attr(get_option('api_time_intervel')); ?>" /><label for="api_time_intervel"> میلی ثانیه </label></td>
                 </tr>
                 <tr valign="top">
                     <th scope="row">Classes</th>
-                    <td><input type="text" name="table_classes" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes">    با فاصله از هم جدا کنید   </label>
+                    <td><input type="text" name="table_classes" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes"> با فاصله از هم جدا کنید </label>
                     </td>
                 </tr>
             </table>
-            <input  name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>" />
-        </form >
+            <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>" />
+        </form>
     </div>
 <?php }
 //shortkey
