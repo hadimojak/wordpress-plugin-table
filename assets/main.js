@@ -14,31 +14,45 @@ table.innerHTML = `<thead>
 const tableBody = table.querySelector('tbody');
 const tableHead = table.querySelector('thead');
 
+function tableCreator(data) {
+    data.forEach(p => {
+        let firstRow = '';
+        let row = '';
+        for (el in p) {
+            firstRow += `<th scope="col">${el}</th>`;
+            row += `<td >${p[el]}</td>`;
+        }
+        tableHead.innerHTML = firstRow;
+        tableBody.innerHTML += row;
+    });
+    tableLocation.insertAdjacentElement('afterbegin', table);
+
+
+}
+
 function startInterval(seconds) {
+
+    //fetch fro first time
+
     fetch(url).then(response => {
         if (response.status === 200) {
             return response.json();
-        }
-        if (response.status === 404) {
+        } else {
             alert('url for data table is incorrect');
             throw new Error('url is incorrect');
         }
+
     }).then(data => {
-        data.forEach(p => {
-            let firstRow = '';
-            let row = '';
-            for (el in p) {
-                firstRow += `<th scope="col">${el}</th>`;
-                row += `<td >${p[el]}</td>`;
-            }
-            tableHead.innerHTML = firstRow;
-            tableBody.innerHTML += row;
-        });
-        tableLocation.insertAdjacentElement('afterbegin', table);
-    }).catch(err => { console.log(err); });
+        tableCreator(data);
+    }).catch(err => {
+        console.log(err);
+        return;
+    });
+
 
     let canTry = true; let i = 0;
     const interval = setInterval(function () {
+
         tableBody.innerHTML = '';
         fetch(url).then(response => {
             if (response.status === 200) {
@@ -48,27 +62,21 @@ function startInterval(seconds) {
             if (response.status === 404) {
                 canTry = true;
                 i++;
+                console.log(i);
                 if (i > 2) {
-                    clearInterval(interval);
-                    alert('url for table data is incorrect');
+
                 }
                 throw new Error('url is incorrect');
             }
 
         }).then(data => {
-            // console.log(data);
-            data.forEach(p => {
-                let firstRow = '';
-                let row = '';
-                for (el in p) {
-                    firstRow += `<th scope="col">${el}</th>`;
-                    row += `<td >${p[el]}</td>`;
-                }
-                tableHead.innerHTML = firstRow;
-                tableBody.innerHTML += row;
-            });
-            tableLocation.insertAdjacentElement('afterbegin', table);
-        }).catch(err => { console.log(err); });
+            tableCreator(data);
+        }).catch(err => {
+            console.log(err);
+            clearInterval(interval);
+            alert('url for table data is incorrect');
+            return;
+        });
 
     }, timeInterval);
 }

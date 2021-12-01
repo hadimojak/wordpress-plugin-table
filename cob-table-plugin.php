@@ -80,7 +80,7 @@ function plugin_settings_page()
 //shortkey
 function tbare_wordpress_plugin_demo($atts)
 {
-    $Content =   "<div id='cob_table_plugin' style='height: 660px' ></div>";
+    $Content =   "<div id='cob_table_plugin' style='height: 700px' ></div>";
     return $Content;
 }
 add_shortcode('cob_table_shortcode', 'tbare_wordpress_plugin_demo');
