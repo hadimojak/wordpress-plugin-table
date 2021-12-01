@@ -73,14 +73,14 @@ function plugin_settings_page()
                     </td>
                 </tr>
             </table>
-            <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>" />
-        </form>
+            <input  name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>" />
+        </form >
     </div>
 <?php }
 //shortkey
 function tbare_wordpress_plugin_demo($atts)
 {
-    $Content =   "<div id='cob_table_plugin' style='height: 700px' ></div>";
+    $Content =   "<div id='cob_table_plugin' style='width: 150%' ></div>";
     return $Content;
 }
 add_shortcode('cob_table_shortcode', 'tbare_wordpress_plugin_demo');
