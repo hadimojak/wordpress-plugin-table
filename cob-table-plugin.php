@@ -101,8 +101,13 @@ function plugin_settings_page()
                     <td><input type="text" name="table_classes" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes"> با فاصله از هم جدا کنید </label>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row">shortcode</th>
+                    <td><input type="text" name="table_shortcode" value="[cob_table_shortcode]" readonly />
+                    </td>
+                </tr>
             </table>
-            <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>" />
+            <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>"  />
         </form>
     </div>
 <?php }
