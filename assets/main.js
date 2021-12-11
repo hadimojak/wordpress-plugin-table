@@ -13,13 +13,15 @@ table.innerHTML = `<thead>
                     `;
 const tableBody = table.querySelector('tbody');
 const tableHead = table.querySelector('thead');
+tableHead.className = scriptParams.tableHeadClasses;
 
 function tableCreator(data) {
     data.forEach(p => {
         let firstRow = '';
         let row = '';
+        console.log(p);
         for (el in p) {
-            firstRow += `<th scope="col">${el}</th>`;
+            firstRow += `<th  scope="col">${el}</th>`;
             row += `<td >${p[el]}</td>`;
         }
         tableHead.innerHTML = firstRow;

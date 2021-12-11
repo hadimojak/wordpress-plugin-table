@@ -56,7 +56,8 @@ function enqueue_scripts()
     $script_params = array(
         'timeIntervel' => esc_attr(get_option('api_time_intervel')),
         'apiUrl' => esc_attr(get_option('api_url')),
-        'tableClasses' => esc_attr(get_option('table_classes'))
+        'tableClasses' => esc_attr(get_option('table_classes')),
+        'tableHeadClasses' => esc_attr(get_option('table_head_classes'))
     );
     wp_localize_script('plugin_script', 'scriptParams', $script_params);
 }
@@ -77,6 +78,7 @@ function register_plugin_settings()
     register_setting('plugin-settings-group', 'api_url');
     register_setting('plugin-settings-group', 'api_time_intervel');
     register_setting('plugin-settings-group', 'table_classes');
+    register_setting('plugin-settings-group', 'table_head_classes');
 }
 function plugin_settings_page()
 {
@@ -102,19 +104,25 @@ function plugin_settings_page()
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row">tableHead Classes</th>
+                    <td><input type="text" name="table_head_classes" value="<?php echo esc_attr(get_option('table_head_classes')); ?>" />
+                        <label for="table_head_classes"> با فاصله از هم جدا کنید </label>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row">shortcode</th>
                     <td><input type="text" name="table_shortcode" value="[cob_table_shortcode]" readonly />
                     </td>
                 </tr>
             </table>
-            <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>"  />
+            <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>" />
         </form>
     </div>
 <?php }
 //shortkey
 function tbare_wordpress_plugin_demo($atts)
 {
-    $Content =   "<div id='cob_table_plugin' style='width: 150%' ></div>";
+    $Content =   "<div id='cob_table_plugin' class='mx-auto' ></div>";
     return $Content;
 }
 add_shortcode('cob_table_shortcode', 'tbare_wordpress_plugin_demo');
