@@ -67,7 +67,7 @@ add_action('admin_menu', 'plugin_create_menu');
 function plugin_create_menu()
 {
     //create new top-level menu
-    add_menu_page('Plugin Settings', 'Cool Settings', 'administrator', __FILE__, 'plugin_settings_page', 'dashicons-editor-table');
+    add_menu_page('Plugin Settings', 'Table Settings', 'administrator', __FILE__, 'plugin_settings_page', 'dashicons-editor-table');
 
     //call register settings function
     add_action('admin_init', 'register_plugin_settings');
@@ -92,7 +92,7 @@ function plugin_settings_page()
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">Api URL</th>
-                    <td><input type="url" name="api_url" value="<?php echo esc_attr(get_option('api_url')); ?>" /></td>
+                    <td><input type="url" name="api_url" style="width: 50%;" value="<?php echo esc_attr(get_option('api_url')); ?>" /></td>
                 </tr>
                 <tr valign="top">
                     <th scope="row">Time Intervel</th>
@@ -100,12 +100,12 @@ function plugin_settings_page()
                 </tr>
                 <tr valign="top">
                     <th scope="row">Classes</th>
-                    <td><input type="text" name="table_classes" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes"> با فاصله از هم جدا کنید </label>
+                    <td><input type="text" name="table_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes"> با فاصله از هم جدا کنید </label>
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row">tableHead Classes</th>
-                    <td><input type="text" name="table_head_classes" value="<?php echo esc_attr(get_option('table_head_classes')); ?>" />
+                    <th scope="row">head Classes</th>
+                    <td><input type="text" name="table_head_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_head_classes')); ?>" />
                         <label for="table_head_classes"> با فاصله از هم جدا کنید </label>
                     </td>
                 </tr>
