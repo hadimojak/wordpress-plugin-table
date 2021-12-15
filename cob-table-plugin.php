@@ -57,7 +57,9 @@ function enqueue_scripts()
         'timeIntervel' => esc_attr(get_option('api_time_intervel')),
         'apiUrl' => esc_attr(get_option('api_url')),
         'tableClasses' => esc_attr(get_option('table_classes')),
-        'tableHeadClasses' => esc_attr(get_option('table_head_classes'))
+        'tableHeadClasses' => esc_attr(get_option('table_head_classes')),
+        'tableTdClasses' => esc_attr(get_option('table_td_classes'))
+
     );
     wp_localize_script('plugin_script', 'scriptParams', $script_params);
 }
@@ -79,6 +81,8 @@ function register_plugin_settings()
     register_setting('plugin-settings-group', 'api_time_intervel');
     register_setting('plugin-settings-group', 'table_classes');
     register_setting('plugin-settings-group', 'table_head_classes');
+    register_setting('plugin-settings-group', 'table_td_classes');
+
 }
 function plugin_settings_page()
 {
@@ -107,6 +111,12 @@ function plugin_settings_page()
                     <th scope="row">head Classes</th>
                     <td><input type="text" name="table_head_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_head_classes')); ?>" />
                         <label for="table_head_classes"> با فاصله از هم جدا کنید </label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">td Classes</th>
+                    <td><input type="text" name="table_td_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_td_classes')); ?>" />
+                        <label for="table_td_classes"> با فاصله از هم جدا کنید </label>
                     </td>
                 </tr>
                 <tr valign="top">
