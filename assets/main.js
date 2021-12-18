@@ -3,23 +3,26 @@ var timeInterval = scriptParams.timeIntervel;
 var url = scriptParams.apiUrl;
 const table = document.createElement("table");
 table.className = scriptParams.tableClasses;
-table.innerHTML = `<thead>
-                    
-                    </thead>
-                    <tbody>
-                    
-                    </tbody>
-                    `;
+if (scriptParams.tableStripedClass === "table-striped") {
+  table.className += " table-striped";
+}
+if (scriptParams.tableHoverClass === "table-hover") {
+  table.className += " table-hover";
+}
+table.innerHTML = `<thead></thead><tbody></tbody>`;
 const tableBody = table.querySelector("tbody");
 const tableHead = table.querySelector("thead");
 tableHead.className = scriptParams.tableHeadClasses;
+
+
+console.log(scriptParams.pick, scriptParams.tableHoverClass);
 
 function tableCreator(data) {
   data.forEach((p) => {
     let firstRow = "";
     let row = "";
     for (el in p) {
-      console.log(el);
+      // console.log(el);
       if (el === "button") {
         firstRow += `<th  scope="col"></th>`;
       } else {

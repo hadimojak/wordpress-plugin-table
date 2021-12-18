@@ -46,6 +46,9 @@ function register_scripts()
     wp_register_style('plugin_style', plugins_url('/assets/style.css', __FILE__));
     wp_register_style('plugin_style_bootstrap', plugins_url('/assets/bootstrap-rtl.min.css', __FILE__));
 }
+
+
+
 function enqueue_scripts()
 {
     wp_enqueue_script('plugin_script');
@@ -53,19 +56,56 @@ function enqueue_scripts()
     wp_enqueue_style('plugin_script_bootstrap');
     wp_enqueue_style('plugin_style_bootstrap');
 
+
+
     $script_params = array(
         'timeIntervel' => esc_attr(get_option('api_time_intervel')),
         'apiUrl' => esc_attr(get_option('api_url')),
         'tableClasses' => esc_attr(get_option('table_classes')),
         'tableHeadClasses' => esc_attr(get_option('table_head_classes')),
-        'tableTdClasses' => esc_attr(get_option('table_td_classes'))
-
+        'tableTdClasses' => esc_attr(get_option('table_td_classes')),
+        'tableStripedClass' => esc_attr(get_option('table_striped_class')),
+        'tableHoverClass' => esc_attr(get_option('table_hover_class')),
+        'pickedOne' => esc_attr(get_option('pick'))
     );
     wp_localize_script('plugin_script', 'scriptParams', $script_params);
 }
-add_action('wp_enqueue_scripts', 'enqueue_scripts');
 
+//add js to plugin settings page
+function wp_ss_plugin_admin_init_cb()
+{
+    wp_register_style(
+        'wp_ss_plugin_style',
+        plugin_dir_url(__FILE__) . '/assets/bootstrap-rtl.min.css'
+    );
+    wp_register_script(
+        'wp_ss_plugin_script_bootstrap',
+        plugin_dir_url(__FILE__) . '/assets/bootstrap.min.js',
+    );
+    wp_register_script(
+        'wp_ss_plugin_script',
+        plugin_dir_url(__FILE__) . '/assets/menu.js',
+    );
+}
+add_action('admin_init', 'wp_ss_plugin_admin_init_cb');
+// admin_enqueue_scripts
+// ************************************************************************************************
+function wp_ss_plugin_admin_enqueue_scripts_cb()
+{
+    //Enqueue JS
+    wp_enqueue_style('wp_ss_plugin_style');
+    wp_enqueue_script('wp_ss_plugin_script');
+    wp_enqueue_script('wp_ss_plugin_script_bootstrap');
+    $script_params = array(
+        'apiUrl' => esc_attr(get_option('api_url'))
+    );
+    wp_localize_script('wp_ss_plugin_script', 'scriptParams', $script_params);
+}
+add_action('admin_enqueue_scripts', 'wp_ss_plugin_admin_enqueue_scripts_cb');
+
+add_action('wp_enqueue_scripts', 'enqueue_scripts');
 add_action('admin_menu', 'plugin_create_menu');
+
 function plugin_create_menu()
 {
     //create new top-level menu
@@ -74,6 +114,7 @@ function plugin_create_menu()
     //call register settings function
     add_action('admin_init', 'register_plugin_settings');
 }
+
 function register_plugin_settings()
 {
     //register our settings
@@ -82,7 +123,9 @@ function register_plugin_settings()
     register_setting('plugin-settings-group', 'table_classes');
     register_setting('plugin-settings-group', 'table_head_classes');
     register_setting('plugin-settings-group', 'table_td_classes');
-
+    register_setting('plugin-settings-group', 'table_striped_class');
+    register_setting('plugin-settings-group', 'table_hover_class');
+    register_scripts('plugin-settings-group', 'pick');
 }
 function plugin_settings_page()
 {
@@ -93,42 +136,65 @@ function plugin_settings_page()
         <form method="post" action="options.php">
             <?php settings_fields('plugin-settings-group'); ?>
             <?php do_settings_sections('plugin-settings-group'); ?>
-            <table class="form-table">
-                <tr valign="top">
-                    <th scope="row">Api URL</th>
-                    <td><input type="url" name="api_url" style="width: 50%;" value="<?php echo esc_attr(get_option('api_url')); ?>" /></td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">Time Intervel</th>
-                    <td><input type="number" name="api_time_intervel" value="<?php echo esc_attr(get_option('api_time_intervel')); ?>" /><label for="api_time_intervel"> میلی ثانیه </label></td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">Classes</th>
-                    <td><input type="text" name="table_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_classes')); ?>" /> <label for="table_classes"> با فاصله از هم جدا کنید </label>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">head Classes</th>
-                    <td><input type="text" name="table_head_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_head_classes')); ?>" />
-                        <label for="table_head_classes"> با فاصله از هم جدا کنید </label>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">td Classes</th>
-                    <td><input type="text" name="table_td_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_td_classes')); ?>" />
-                        <label for="table_td_classes"> با فاصله از هم جدا کنید </label>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">shortcode</th>
-                    <td><input type="text" name="table_shortcode" value="[cob_table_shortcode]" readonly />
-                    </td>
-                </tr>
-            </table>
+            <div class="form-table">
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">Api URL</p>
+                    <input class="col-5 mr-3" type="url" name="api_url" value="<?php echo esc_attr(get_option('api_url')); ?>" />
+                    <button type="button" class="btn btn-outline-success" onclick="fetchFunction()">recieve</button>
+                </div>
+                <div id='tableLoc' class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">لسیت رمز ارزهای دریافت شده از سرویس</p>
+
+                    <table id='apiTable' class="table col-12"></table>
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">فرم نمایش جدول</p>
+                    <select name='mySelect' class="form-select" aria-label="Default select example" onchange="document.forms['mySelect'].submit()" >
+                        <option selected>انتخاب کنید</option>
+                        <option value="1">نمایش همه ردیف ها</option>
+                        <option value="2">صفحه بندی</option>
+                        <option value="3">نمایش با نوار پیمایش</option>
+                    </select>
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">Time Intervel</p>
+                    <input class='col-3 mr-3' type="number" name="api_time_intervel" value="<?php echo esc_attr(get_option('api_time_intervel')); ?>" />
+                    <label for="api_time_intervel" class="m-0 align-self-center"> میلی ثانیه </label>
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">کلاس های bootstrap جدول</p>
+                    <input class='col-5 ' type="text" name="table_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_classes')); ?>" />
+                    <label for="table_classes" class="ml-2 align-self-center"> با فاصله از هم جدا کنید </label>
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">نماش striped جدول</p>
+                    <input type="checkbox" name="table_striped_class" value='table-striped' <?php if (isset($_POST['table_striped_class'])) { ?> value="on" <?php } else { ?> value='off' <?php } ?> <?php if (esc_attr(get_option('table_striped_class')) === 'table-striped') { ?> checked <?php }; ?> />
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">نماش hover جدول</p>
+                    <input type="checkbox" name="table_hover_class" value='table-hover' <?php if (isset($_POST['table_hover_class'])) { ?> value="on" <?php } else { ?> value='off' <?php } ?> <?php if (esc_attr(get_option('table_hover_class')) === 'table-hover') { ?> checked <?php }; ?> />
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">کلاس های bootstrap سربرگ جدول</p>
+                    <input class="col-5" type="text" name="table_head_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_head_classes')); ?>" />
+                    <label for="table_head_classes" class="ml-2"> با فاصله از هم جدا کنید </label>
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">کلاس های bootstrap خانه های جدول</p>
+                    <input class="col-5" type="text" name="table_td_classes" style="width: 60%;" value="<?php echo esc_attr(get_option('table_td_classes')); ?>" />
+                    <label for="table_td_classes" class="ml-2"> با فاصله از هم جدا کنید </label>
+                </div>
+                <div class="row my-2">
+                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">shortcode</p>
+                    <input type="text" name="table_shortcode" value="[cob_table_shortcode]" readonly />
+                </div>
+            </div>
             <input name="submit" class="button button-primary" type="submit" value="<?php esc_attr_e('ذخیره'); ?>" />
         </form>
     </div>
 <?php }
+
+
 //shortkey
 function tbare_wordpress_plugin_demo($atts)
 {
