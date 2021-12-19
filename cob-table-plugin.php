@@ -66,7 +66,7 @@ function enqueue_scripts()
         'tableTdClasses' => esc_attr(get_option('table_td_classes')),
         'tableStripedClass' => esc_attr(get_option('table_striped_class')),
         'tableHoverClass' => esc_attr(get_option('table_hover_class')),
-        'pickedOne' => esc_attr(get_option('pick'))
+        'tableTheme' => esc_attr(get_option('mySelect'))
     );
     wp_localize_script('plugin_script', 'scriptParams', $script_params);
 }
@@ -77,6 +77,10 @@ function wp_ss_plugin_admin_init_cb()
     wp_register_style(
         'wp_ss_plugin_style',
         plugin_dir_url(__FILE__) . '/assets/bootstrap-rtl.min.css'
+    );
+    wp_register_style(
+        'wp_ss_plugin_mystyle',
+        plugin_dir_url(__FILE__) . '/assets/menu.css'
     );
     wp_register_script(
         'wp_ss_plugin_script_bootstrap',
@@ -94,6 +98,7 @@ function wp_ss_plugin_admin_enqueue_scripts_cb()
 {
     //Enqueue JS
     wp_enqueue_style('wp_ss_plugin_style');
+    wp_enqueue_style('wp_ss_plugin_mystyle');
     wp_enqueue_script('wp_ss_plugin_script');
     wp_enqueue_script('wp_ss_plugin_script_bootstrap');
     $script_params = array(
@@ -125,7 +130,9 @@ function register_plugin_settings()
     register_setting('plugin-settings-group', 'table_td_classes');
     register_setting('plugin-settings-group', 'table_striped_class');
     register_setting('plugin-settings-group', 'table_hover_class');
-    register_scripts('plugin-settings-group', 'pick');
+    register_setting('plugin-settings-group', 'mySelect');
+    register_setting('plugin-settings-group', 'pick');
+    register_setting('plugin-settings-group', 'buy');
 }
 function plugin_settings_page()
 {
@@ -149,12 +156,15 @@ function plugin_settings_page()
                 </div>
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">فرم نمایش جدول</p>
-                    <select name='mySelect' class="form-select" aria-label="Default select example" onchange="document.forms['mySelect'].submit()" >
+                    <select name='mySelect' class="form-select" aria-label="Default select example">
                         <option selected>انتخاب کنید</option>
-                        <option value="1">نمایش همه ردیف ها</option>
-                        <option value="2">صفحه بندی</option>
-                        <option value="3">نمایش با نوار پیمایش</option>
+                        <option value="all" <?php if (esc_attr(get_option('mySelect')) === 'all') { ?> selected <?php }; ?>>نمایش همه ردیف ها</option>
+                        <option value="paggini" <?php if (esc_attr(get_option('mySelect')) === 'paggini') { ?> selected <?php }; ?>>صفحه بندی</option>
+                        <option value="scroll" <?php if (esc_attr(get_option('mySelect')) === 'scroll') { ?> selected <?php }; ?>>نمایش با نوار پیمایش</option>
                     </select>
+                    <?php
+
+                    ?>
                 </div>
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">Time Intervel</p>
@@ -168,11 +178,11 @@ function plugin_settings_page()
                 </div>
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">نماش striped جدول</p>
-                    <input type="checkbox" name="table_striped_class" value='table-striped' <?php if (isset($_POST['table_striped_class'])) { ?> value="on" <?php } else { ?> value='off' <?php } ?> <?php if (esc_attr(get_option('table_striped_class')) === 'table-striped') { ?> checked <?php }; ?> />
+                    <input type="checkbox" name="table_striped_class" value='table-striped' <?php if (esc_attr(get_option('table_striped_class')) === 'table-striped') { ?> checked <?php }; ?> />
                 </div>
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">نماش hover جدول</p>
-                    <input type="checkbox" name="table_hover_class" value='table-hover' <?php if (isset($_POST['table_hover_class'])) { ?> value="on" <?php } else { ?> value='off' <?php } ?> <?php if (esc_attr(get_option('table_hover_class')) === 'table-hover') { ?> checked <?php }; ?> />
+                    <input type="checkbox" name="table_hover_class" value='table-hover' <?php if (esc_attr(get_option('table_hover_class')) === 'table-hover') { ?> checked <?php }; ?> />
                 </div>
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">کلاس های bootstrap سربرگ جدول</p>
@@ -193,6 +203,7 @@ function plugin_settings_page()
         </form>
     </div>
 <?php }
+
 
 
 //shortkey

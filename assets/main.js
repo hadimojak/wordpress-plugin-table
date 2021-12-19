@@ -1,7 +1,13 @@
 const tableLocation = document.querySelector("#cob_table_plugin");
+const tableTheme = scriptParams.tableTheme;
+console.log(tableTheme);
 var timeInterval = scriptParams.timeIntervel;
 var url = scriptParams.apiUrl;
 const table = document.createElement("table");
+
+
+
+
 table.className = scriptParams.tableClasses;
 if (scriptParams.tableStripedClass === "table-striped") {
   table.className += " table-striped";
@@ -14,8 +20,17 @@ const tableBody = table.querySelector("tbody");
 const tableHead = table.querySelector("thead");
 tableHead.className = scriptParams.tableHeadClasses;
 
+if (tableTheme === 'scroll') {
+  tableLocation.style.maxHeight = '300px';
+  tableLocation.style.overflow = 'auto';
+  tableHead.style.position = 'sticky';
+  tableHead.style.top = '0';
+  tableHead.style.backgroundColor = '#fff';
+}
 
-console.log(scriptParams.pick, scriptParams.tableHoverClass);
+if (tableTheme === 'paggini') {
+
+}
 
 function tableCreator(data) {
   data.forEach((p) => {
@@ -41,7 +56,7 @@ function startInterval(seconds) {
 
   fetch(url, {
     method: "GET",
-    mode: "cors",
+
   })
     .then((response) => {
       if (response.status === 200) {
@@ -63,7 +78,7 @@ function startInterval(seconds) {
   let i = 0;
   const interval = setInterval(function () {
     tableBody.innerHTML = "";
-    fetch(url, { method: "GET", mode: "cors" })
+    fetch(url, { method: "GET" })
       .then((response) => {
         if (response.status === 200) {
           canTry = false;

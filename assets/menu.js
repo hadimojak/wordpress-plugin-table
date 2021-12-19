@@ -17,9 +17,9 @@ function tableCreator(data) {
     }
     firstRow += `<th scope='col'>نمایش</th>`;
     firstRow += `<th scope='col'>خرید/فروش</th>`;
-    row += `<td> <input type="checkbox" name="checkbox[]" value="Option 1" />
+    row += `<td > <input name='pick[]' type="checkbox"  value="on" />
     </td>`;
-    row += `<td>  <input class="form-check-input" name='buy' type="checkbox" >
+    row += `<td >  <input  name='buy[]' type="checkbox" value='on' >
     </td>`;
     tableHead.innerHTML = firstRow;
     tableBody.innerHTML += row;
