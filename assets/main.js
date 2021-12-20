@@ -47,7 +47,7 @@ function tableCreator(data) {
         row += `<td class=${scriptParams.tableTdClasses} >${p[el]}</td>`;
       }
     }
-    if (Object.keys(buyOptions).includes(p.alias)) {
+    if (Object.keys(buyOptions).includes(p.alias) && Object.keys(pickOptions).includes(p.alias)) {
       row += `<td class=${scriptParams.tableTdClasses} ><a class="btn btn-success" href="#" role="button">خرید/فروش</a>
       </td>`;
     }
@@ -108,3 +108,8 @@ function startInterval(seconds) {
   }, timeInterval);
 }
 startInterval();
+
+
+function rialHandler() {
+  console.log('tooooo riallllllll');
+}
