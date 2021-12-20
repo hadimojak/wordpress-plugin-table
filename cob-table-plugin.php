@@ -143,7 +143,6 @@ function plugin_settings_page()
 ?>
     <div class="wrap">
         <h1>Cob Table Api</h1>
-
         <form method="post" action="options.php">
             <?php settings_fields('plugin-settings-group'); ?>
             <?php do_settings_sections('plugin-settings-group'); ?>
@@ -153,9 +152,7 @@ function plugin_settings_page()
                     <input class="col-5 mr-3" type="url" name="api_url" value="<?php echo esc_attr(get_option('api_url')); ?>" />
                     <button type="button" class="btn btn-outline-success" onclick="fetchFunction()">recieve</button>
                 </div>
-
-           
-
+                
                 <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">لسیت رمز ارزهای دریافت شده از سرویس</p>
 
                 <div id='tableLoc' class="row my-2">

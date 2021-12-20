@@ -44,23 +44,13 @@ function tableCreator(data) {
     firstRow += `<th  scope="col">خرید/فروش</th>`;
     if (Object.keys(pickOptions).includes(p.alias)) {
       for (el in p) {
-        // if (el === "button") {
-        //   firstRow += `<th  scope="col"></th>`;
-        // } else {
-        //   firstRow += `<th  scope="col">${el}</th>`;
-        // }
         row += `<td class=${scriptParams.tableTdClasses} >${p[el]}</td>`;
       }
     }
     if (Object.keys(buyOptions).includes(p.alias)) {
-      console.log(p.alias);
-      row += `<td class=${scriptParams.tableTdClasses} >buy button</td>`;
-
+      row += `<td class=${scriptParams.tableTdClasses} ><a class="btn btn-success" href="#" role="button">خرید/فروش</a>
+      </td>`;
     }
-
-
-
-
     tableHead.innerHTML = firstRow;
     tableBody.innerHTML += row;
   });
@@ -69,10 +59,8 @@ function tableCreator(data) {
 
 function startInterval(seconds) {
   //fetch fro first time
-
   fetch(url, {
     method: "GET",
-
   })
     .then((response) => {
       if (response.status === 200) {
