@@ -1,4 +1,6 @@
 const url = scriptParams.apiUrl;
+const pickOptions = scriptParams.pick_options;
+const buyOptions = scriptParams.buy_options;
 
 function tableCreator(data) {
   const apiTable = document.getElementById("apiTable");
@@ -8,19 +10,21 @@ function tableCreator(data) {
   const tableHead = apiTable.querySelector("thead");
 
   data.forEach((p) => {
-    console.log(p);
     let firstRow = "";
     let row = "";
     for (el in p) {
-      firstRow += `<th  scope="col">${el}</th>`;
-      row += `<td class=${scriptParams.tableTdClasses} >${p[el]}</td>`;
+      firstRow += `<th scope="col">${el}</th>`;
+      row += `<td>${p[el]}</td>`;
     }
     firstRow += `<th scope='col'>نمایش</th>`;
     firstRow += `<th scope='col'>خرید/فروش</th>`;
-    row += `<td > <input name='pick[]' type="checkbox"  value="on" />
-    </td>`;
-    row += `<td >  <input  name='buy[]' type="checkbox" value='on' >
-    </td>`;
+
+    const alias = row.substring(
+      row.indexOf("<td>") + 4,
+      row.indexOf("</td>")
+    );
+    row += `<td > <input name='pick[${alias}]' type="checkbox" ${Object.keys(pickOptions).includes(alias)? 'checked':''}  value="on"  /></td>`;
+    row += `<td >  <input  name='buy[${alias}]' type="checkbox" ${Object.keys(buyOptions).includes(alias)? 'checked':''} value='on' ></td>`;
     tableHead.innerHTML = firstRow;
     tableBody.innerHTML += row;
   });

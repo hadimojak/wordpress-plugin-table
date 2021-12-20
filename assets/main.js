@@ -1,7 +1,7 @@
 const tableLocation = document.querySelector("#cob_table_plugin");
 const tableTheme = scriptParams.tableTheme;
 console.log(tableTheme);
-var timeInterval = scriptParams.timeIntervel;
+var timeInterval = scriptParams.timeIntervel * 1000;
 var url = scriptParams.apiUrl;
 const table = document.createElement("table");
 

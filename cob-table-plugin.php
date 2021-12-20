@@ -66,7 +66,9 @@ function enqueue_scripts()
         'tableTdClasses' => esc_attr(get_option('table_td_classes')),
         'tableStripedClass' => esc_attr(get_option('table_striped_class')),
         'tableHoverClass' => esc_attr(get_option('table_hover_class')),
-        'tableTheme' => esc_attr(get_option('mySelect'))
+        'tableTheme' => esc_attr(get_option('mySelect')),
+        'pick_options' => get_option('pick'),
+        'buy_options' => get_option('buy'),
     );
     wp_localize_script('plugin_script', 'scriptParams', $script_params);
 }
@@ -102,7 +104,9 @@ function wp_ss_plugin_admin_enqueue_scripts_cb()
     wp_enqueue_script('wp_ss_plugin_script');
     wp_enqueue_script('wp_ss_plugin_script_bootstrap');
     $script_params = array(
-        'apiUrl' => esc_attr(get_option('api_url'))
+        'apiUrl' => esc_attr(get_option('api_url')),
+        'pick_options' => get_option('pick'),
+        'buy_options' => get_option('buy'),
     );
     wp_localize_script('wp_ss_plugin_script', 'scriptParams', $script_params);
 }
@@ -149,8 +153,12 @@ function plugin_settings_page()
                     <input class="col-5 mr-3" type="url" name="api_url" value="<?php echo esc_attr(get_option('api_url')); ?>" />
                     <button type="button" class="btn btn-outline-success" onclick="fetchFunction()">recieve</button>
                 </div>
+
+           
+
+                <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">لسیت رمز ارزهای دریافت شده از سرویس</p>
+
                 <div id='tableLoc' class="row my-2">
-                    <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">لسیت رمز ارزهای دریافت شده از سرویس</p>
 
                     <table id='apiTable' class="table col-12"></table>
                 </div>
@@ -169,7 +177,7 @@ function plugin_settings_page()
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">Time Intervel</p>
                     <input class='col-3 mr-3' type="number" name="api_time_intervel" value="<?php echo esc_attr(get_option('api_time_intervel')); ?>" />
-                    <label for="api_time_intervel" class="m-0 align-self-center"> میلی ثانیه </label>
+                    <label for="api_time_intervel" class="m-0 align-self-center">ثانیه </label>
                 </div>
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">کلاس های bootstrap جدول</p>
