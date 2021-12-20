@@ -1,6 +1,8 @@
 const tableLocation = document.querySelector("#cob_table_plugin");
 const tableTheme = scriptParams.tableTheme;
-console.log(tableTheme);
+const pickOptions = scriptParams.pick_options;
+const buyOptions = scriptParams.buy_options;
+
 var timeInterval = scriptParams.timeIntervel * 1000;
 var url = scriptParams.apiUrl;
 const table = document.createElement("table");
@@ -36,15 +38,29 @@ function tableCreator(data) {
   data.forEach((p) => {
     let firstRow = "";
     let row = "";
-    for (el in p) {
-      // console.log(el);
-      if (el === "button") {
-        firstRow += `<th  scope="col"></th>`;
-      } else {
-        firstRow += `<th  scope="col">${el}</th>`;
+    Object.keys(p).forEach(q => {
+      firstRow += `<th  scope="col">${q}</th>`;
+    });
+    firstRow += `<th  scope="col">خرید/فروش</th>`;
+    if (Object.keys(pickOptions).includes(p.alias)) {
+      for (el in p) {
+        // if (el === "button") {
+        //   firstRow += `<th  scope="col"></th>`;
+        // } else {
+        //   firstRow += `<th  scope="col">${el}</th>`;
+        // }
+        row += `<td class=${scriptParams.tableTdClasses} >${p[el]}</td>`;
       }
-      row += `<td class=${scriptParams.tableTdClasses} >${p[el]}</td>`;
     }
+    if (Object.keys(buyOptions).includes(p.alias)) {
+      console.log(p.alias);
+      row += `<td class=${scriptParams.tableTdClasses} >buy button</td>`;
+
+    }
+
+
+
+
     tableHead.innerHTML = firstRow;
     tableBody.innerHTML += row;
   });
