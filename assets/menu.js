@@ -10,7 +10,7 @@ function tableCreator(data) {
   const tableHead = apiTable.querySelector("thead");
   tableHead.style.position = 'sticky';
   tableHead.style.top = '0';
-  tableHead.style.backgroundColor = '#fff';
+  tableHead.style.backgroundColor = '#71d7f7';
 
   data.forEach((p) => {
     let firstRow = "";

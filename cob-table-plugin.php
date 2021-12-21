@@ -158,8 +158,7 @@ function plugin_settings_page()
                 <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">لسیت رمز ارزهای دریافت شده از سرویس</p>
 
                 <div id='tableLoc' class="row my-2">
-
-                    <table id='apiTable' class="table re"></table>
+                    <table id='apiTable' class="table "></table>
                 </div>
                 <div class="row my-2">
                     <p class="col-3 p-0 ml-2 mb-0 text-right align-self-center">فرم نمایش جدول</p>
