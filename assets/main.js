@@ -111,3 +111,11 @@ document.getElementById('rial').addEventListener('click', rialHandler);
 function rialHandler() {
   console.log('tooooo riallllllll');
 }
+document.getElementById('tether').addEventListener('click', tetherHandler);
+function tetherHandler() {
+  console.log('tooooo tether');
+}
+document.getElementById('bitcoin').addEventListener('click', bitcoinHandler);
+function bitcoinHandler() {
+  console.log('tooooo bitcoin');
+}
