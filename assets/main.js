@@ -7,9 +7,6 @@ var timeInterval = scriptParams.timeIntervel * 1000;
 var url = scriptParams.apiUrl;
 const table = document.createElement("table");
 
-
-
-
 table.className = scriptParams.tableClasses;
 if (scriptParams.tableStripedClass === "table-striped") {
   table.className += " table-striped";
@@ -110,6 +107,7 @@ function startInterval(seconds) {
 startInterval();
 
 
+document.getElementById('rial').addEventListener('click', rialHandler);
 function rialHandler() {
   console.log('tooooo riallllllll');
 }

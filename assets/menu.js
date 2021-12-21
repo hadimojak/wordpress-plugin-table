@@ -8,6 +8,9 @@ function tableCreator(data) {
   apiTable.innerHTML = `<thead></thead><tbody></tbody>`;
   const tableBody = apiTable.querySelector("tbody");
   const tableHead = apiTable.querySelector("thead");
+  tableHead.style.position = 'sticky';
+  tableHead.style.top = '0';
+  tableHead.style.backgroundColor = '#fff';
 
   data.forEach((p) => {
     let firstRow = "";
@@ -23,8 +26,8 @@ function tableCreator(data) {
       row.indexOf("<td>") + 4,
       row.indexOf("</td>")
     );
-    row += `<td > <input name='pick[${alias}]' type="checkbox" ${Object.keys(pickOptions).includes(alias)? 'checked':''}  value="on"  /></td>`;
-    row += `<td >  <input  name='buy[${alias}]' type="checkbox" ${Object.keys(buyOptions).includes(alias)? 'checked':''} value='on' ></td>`;
+    row += `<td > <input name='pick[${alias}]' type="checkbox" ${Object.keys(pickOptions).includes(alias) ? 'checked' : ''}  value="on"  /></td>`;
+    row += `<td >  <input  name='buy[${alias}]' type="checkbox" ${Object.keys(buyOptions).includes(alias) ? 'checked' : ''} value='on' ></td>`;
     tableHead.innerHTML = firstRow;
     tableBody.innerHTML += row;
   });
@@ -43,3 +46,7 @@ function fetchFunction() {
       console.log(err);
     });
 }
+
+window.onload = function () {
+  document.getElementById('fetchBtn').click();
+};
