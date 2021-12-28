@@ -40,7 +40,8 @@ function fetchFunction() {
       return response.json();
     })
     .then((data) => {
-      tableCreator(data);
+      console.log(data.rows);
+      tableCreator(data.rows);
     })
     .catch((err) => {
       console.log(err);

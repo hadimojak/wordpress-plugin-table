@@ -45,6 +45,7 @@ function register_scripts()
     wp_register_script('plugin_script_bootstrap', plugins_url('/assets/bootstrap.min.js', __FILE__));
     wp_register_style('plugin_style', plugins_url('/assets/style.css', __FILE__));
     wp_register_style('plugin_style_bootstrap', plugins_url('/assets/bootstrap-rtl.min.css', __FILE__));
+    wp_register_style('plugin_cryptofont', plugins_url('/assets/cryptofont/cryptofont.min.css', __FILE__));
 }
 
 
@@ -53,8 +54,9 @@ function enqueue_scripts()
 {
     wp_enqueue_script('plugin_script');
     wp_enqueue_style('plugin_style');
-    wp_enqueue_style('plugin_script_bootstrap');
+    wp_enqueue_script('plugin_script_bootstrap');
     wp_enqueue_style('plugin_style_bootstrap');
+    wp_enqueue_style('plugin_cryptofont');
 
 
 

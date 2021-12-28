@@ -20,7 +20,7 @@ const tableHead = table.querySelector("thead");
 tableHead.className = scriptParams.tableHeadClasses;
 
 if (tableTheme === 'scroll') {
-  tableLocation.style.maxHeight = '300px';
+  tableLocation.style.maxHeight = '450px';
   tableLocation.style.overflow = 'auto';
   tableHead.style.position = 'sticky';
   tableHead.style.top = '0';
@@ -31,17 +31,61 @@ if (tableTheme === 'paggini') {
 
 }
 
+
+
 function tableCreator(data) {
   data.forEach((p) => {
     let firstRow = "";
     let row = "";
     Object.keys(p).forEach(q => {
-      firstRow += `<th  scope="col">${q}</th>`;
+      console.log(q);
+      switch (q) {
+        case 'alias':
+          firstRow += `<th  scope="col">لوگو</th>`;
+
+          break;
+        case 'title':
+          firstRow += `<th  scope="col">title</th>`;
+
+          break;
+        case 'faTitle':
+          firstRow += `<th  scope="col">عنوان</th>`;
+
+          break;
+        case 'currentPriceIRR':
+          firstRow += `<th  scope="col">قیمت به ریال</th>`;
+
+          break;
+        case 'currentPriceUSD':
+          firstRow += `<th  scope="col">قیمت به دلار</th>`;
+
+          break;
+          case 'status':
+
+          break;
+        default:
+          firstRow += `<th  scope="col">${q}</th>`;
+
+          break;
+      }
     });
     firstRow += `<th  scope="col">خرید/فروش</th>`;
     if (Object.keys(pickOptions).includes(p.alias)) {
       for (el in p) {
-        row += `<td class=${scriptParams.tableTdClasses} >${p[el]}</td>`;
+        switch (el) {
+          case 'alias':
+            row += `<td class=${scriptParams.tableTdClasses} ><i class="cf cf-${p[el]}" style="font-size: 3em;"></i></td>`;
+
+            break;
+            case 'status':
+  
+              break;
+          default:
+            row += `<td class=${scriptParams.tableTdClasses} >${p[el]}</td>`;
+
+            break;
+        }
+
       }
     }
     if (Object.keys(buyOptions).includes(p.alias) && Object.keys(pickOptions).includes(p.alias)) {
@@ -68,7 +112,8 @@ function startInterval(seconds) {
       }
     })
     .then((data) => {
-      tableCreator(data);
+      tableCreator(data.rows);
+      console.log(data);
     })
     .catch((err) => {
       console.log(err);
@@ -94,7 +139,7 @@ function startInterval(seconds) {
         }
       })
       .then((data) => {
-        tableCreator(data);
+        tableCreator(data.rows);
       })
       .catch((err) => {
         console.log(err);
